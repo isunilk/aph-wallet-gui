@@ -7,13 +7,13 @@
         <p>Closing your wallet during this process may result in the GAS claim failing and require you to run it again.</p>
         <div class="checklist">
           <div class="checklist-header">Steps:</div>
-          <ol>
-            <li :class="stepClass(1)">{{step1Label}}</li>
-            <li :class="stepClass(2)">{{step2Label}}</li>
-            <li :class="stepClass(3)">{{step3Label}}</li>
-            <li :class="stepClass(4)">{{step4Label}}</li>
-            <li :class="stepClass(5)">{{step5Label}}</li>
-          </ol>
+          <ul>
+            <li :class="stepClass(1)"><span>{{stepIndicator(1)}}</span>{{step1Label}}</li>
+            <li :class="stepClass(2)"><span>{{stepIndicator(2)}}</span>{{step2Label}}</li>
+            <li :class="stepClass(3)"><span>{{stepIndicator(3)}}</span>{{step3Label}}</li>
+            <li :class="stepClass(4)"><span>{{stepIndicator(4)}}</span>{{step4Label}}</li>
+            <li :class="stepClass(5)"><span>{{stepIndicator(5)}}</span>{{step5Label}}</li>
+          </ul>
 
           <div class="error" v-if="error !== null">
             {{error}}
@@ -111,6 +111,15 @@ export default {
 
       return [];
     },
+
+    stepIndicator(step) {
+      if (this.$store.state.gasClaim.step <= step
+        && this.$store.state.gasClaim.step < 5) {
+        return `${step}.`;
+      }
+
+      return '✔';
+    },
   },
 };
 </script>
@@ -169,12 +178,17 @@ export default {
         text-align: center;
       }
 
-      ol {
+      ul {
         margin: 0;
+        list-style: none;
 
         li {
           color: $grey;
           padding: $space-sm 0;
+          
+          span {
+            padding: $space-sm;
+          }
 
           &.in-progress {
             color: $dark;
@@ -187,7 +201,10 @@ export default {
 
           &.complete {
             color: $dark;
-            text-decoration: line-through;
+          
+            span {
+              color: $green;
+            }
           }
         }
       }
