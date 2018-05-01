@@ -307,7 +307,6 @@ export default {
         right: 0;
         z-index: 0;
       }
-    }
 
     .estimated-value {
       display: flex;
