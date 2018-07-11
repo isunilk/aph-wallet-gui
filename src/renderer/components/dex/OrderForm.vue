@@ -485,7 +485,7 @@ export default {
   }
 
   .body, .footer {
-    padding: $space;
+    padding: $space $space 0;
   }
 
   .footer {
